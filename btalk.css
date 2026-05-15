@@ -1,5 +1,11 @@
 /* b.talks — 작가와의 만남 (btalk.html) */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .page-btalk {
   /* 포스터 톤: 잔디 딥 그린 + 크림 타이포 + 포인트 레드 */
   --bt-forest: #2d3b2d;
@@ -25,6 +31,7 @@
   background: linear-gradient(180deg, var(--bt-paper-warm) 0%, var(--bt-paper) 50%, #e3ddd2 100%);
   color: var(--bt-ink);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* 상단 네비 */
@@ -44,17 +51,34 @@
 .btalk-back {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  padding: 10px 18px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--bt-navy);
   text-decoration: none;
   letter-spacing: 0.02em;
-  transition: color 0.15s ease, transform 0.15s ease;
+  border: 2px solid var(--bt-navy);
+  border-radius: 999px;
+  background: transparent;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 .btalk-back:hover {
-  color: var(--bt-navy-soft);
-  transform: translateX(-2px);
+  background: var(--bt-navy);
+  color: var(--bt-cream-fg);
+  border-color: var(--bt-navy);
+  box-shadow: 0 6px 20px rgba(31, 41, 32, 0.22);
+  transform: translateY(-1px);
+}
+.btalk-back:focus-visible {
+  outline: 2px solid var(--bt-accent);
+  outline-offset: 3px;
 }
 
 /* 히어로 — 포스터와 같은 딥 그린 + 크림 글자 */
@@ -146,27 +170,6 @@
   margin: 0 auto 22px;
   border-radius: 2px;
   opacity: 0.95;
-}
-.btalk-hero-signing {
-  margin: 0 auto 22px;
-  max-width: 440px;
-  padding: 14px 18px;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--bt-cream-fg);
-  text-align: center;
-  background: rgba(181, 47, 40, 0.28);
-  border: 1px solid rgba(255, 220, 210, 0.35);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-}
-.btalk-hero-signing strong {
-  color: #fff;
-  font-weight: 700;
-}
-.btalk-hero-signing-icon {
-  margin-right: 8px;
 }
 .btalk-meta-grid {
   display: grid;
@@ -408,6 +411,16 @@
   box-shadow: var(--bt-shadow);
   padding: 22px 20px 24px;
   margin-bottom: 20px;
+  width: 100%;
+  min-width: 0;
+}
+.btalk-form fieldset.btalk-field {
+  min-width: 0;
+}
+.btalk-form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .btalk-form-label {
   display: block;
@@ -425,12 +438,17 @@
 
 .btalk-field {
   margin-bottom: 18px;
+  width: 100%;
+  min-width: 0;
 }
 .btalk-field:last-child {
   margin-bottom: 0;
 }
 .btalk-input {
+  display: block;
   width: 100%;
+  max-width: none;
+  min-width: 0;
   padding: 12px 14px;
   font-size: 15px;
   font-family: 'Noto Sans KR', sans-serif;
@@ -805,4 +823,8 @@
   text-align: center;
   line-height: 1.55;
 }
-.btalk-input { width: 100%; box-sizing: border-box; }
+
+.btalk-form input.btalk-input {
+  -webkit-appearance: none;
+  appearance: none;
+}
