@@ -868,33 +868,21 @@
   outline-offset: 3px;
 }
 .btalk-author-note-quote {
-  position: relative;
   margin: 0 0 14px;
-  padding-left: 18px;
-  border-left: 4px solid #4a8cff;
+  padding: 0;
   font-family: 'Noto Serif KR', serif;
   color: #0a1f44;
   letter-spacing: -0.03em;
 }
-.btalk-author-note-quote::before {
-  content: '“';
-  position: absolute;
-  top: -18px;
-  left: 10px;
-  color: rgba(10, 31, 68, 0.12);
-  font-family: 'Noto Serif KR', serif;
-  font-size: 72px;
-  font-weight: 700;
-  line-height: 1;
-  pointer-events: none;
-}
 .btalk-author-note-quote p {
-  position: relative;
-  z-index: 1;
   margin: 0;
   font-size: clamp(18px, 2.8vw, 25px);
   font-weight: 700;
   line-height: 1.55;
+}
+.btalk-author-note-mark {
+  color: rgba(10, 31, 68, 0.78);
+  font: inherit;
 }
 .btalk-author-note-source {
   margin: 0 0 14px;
@@ -934,9 +922,6 @@
   .btalk-author-note-image-link {
     width: 100%;
     aspect-ratio: 16 / 10;
-  }
-  .btalk-author-note-quote {
-    padding-left: 16px;
   }
   .btalk-author-note-quote p {
     font-size: clamp(18px, 5vw, 20px);
