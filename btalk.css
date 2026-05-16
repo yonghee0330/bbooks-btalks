@@ -769,6 +769,180 @@
   filter: brightness(1.03);
 }
 
+.btalk-author-note {
+  margin-top: 34px;
+}
+.btalk-author-note-head {
+  margin-bottom: 18px;
+  text-align: center;
+}
+.btalk-author-note-title {
+  margin: 0 0 8px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  color: var(--bt-navy);
+  letter-spacing: -0.02em;
+}
+.btalk-author-note-sub {
+  margin: 0;
+  font-size: clamp(13px, 3.3vw, 15px);
+  color: var(--bt-muted);
+  line-height: 1.55;
+}
+.btalk-author-note-card {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 36px);
+  align-items: center;
+  padding: clamp(22px, 4vw, 32px);
+  background: #fafaf7;
+  border: 1px solid rgba(213, 208, 196, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 12px 34px rgba(28, 38, 28, 0.1);
+}
+.btalk-author-note-image-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 240px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: #ebe6dc;
+  box-shadow: 0 10px 24px rgba(28, 38, 28, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btalk-author-note-image-link:hover,
+.btalk-author-note-image-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(28, 38, 28, 0.2);
+}
+.btalk-author-note-image-link:focus-visible {
+  outline: 3px solid var(--bt-accent);
+  outline-offset: 4px;
+}
+.btalk-author-note-image-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btalk-author-note-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  background: rgba(10, 31, 68, 0.38);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.btalk-author-note-image-link:hover .btalk-author-note-overlay,
+.btalk-author-note-image-link:focus-visible .btalk-author-note-overlay {
+  opacity: 1;
+}
+.btalk-author-note-body {
+  min-width: 0;
+}
+.btalk-author-note-profile {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--bt-muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.btalk-author-note-profile:hover {
+  background: rgba(74, 140, 255, 0.08);
+  transform: translateY(-1px);
+}
+.btalk-author-note-profile:focus-visible {
+  outline: 2px solid #4a8cff;
+  outline-offset: 3px;
+}
+.btalk-author-note-quote {
+  position: relative;
+  margin: 0 0 14px;
+  padding-left: 18px;
+  border-left: 4px solid #4a8cff;
+  font-family: 'Noto Serif KR', serif;
+  color: #0a1f44;
+  letter-spacing: -0.03em;
+}
+.btalk-author-note-quote::before {
+  content: '“';
+  position: absolute;
+  top: -18px;
+  left: 10px;
+  color: rgba(10, 31, 68, 0.12);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+.btalk-author-note-quote p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(18px, 2.8vw, 25px);
+  font-weight: 700;
+  line-height: 1.55;
+}
+.btalk-author-note-source {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-style: italic;
+  color: #9a9a9a;
+}
+.btalk-author-note-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  background: linear-gradient(135deg, #833ab4 0%, #e1306c 52%, #fd1d1d 100%);
+  box-shadow: 0 8px 22px rgba(225, 48, 108, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.btalk-author-note-cta:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(225, 48, 108, 0.34);
+}
+.btalk-author-note-cta:focus-visible {
+  outline: 2px solid var(--bt-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 768px) {
+  .btalk-author-note-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .btalk-author-note-image-link {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+  .btalk-author-note-quote {
+    padding-left: 16px;
+  }
+  .btalk-author-note-quote p {
+    font-size: clamp(18px, 5vw, 20px);
+  }
+}
+
 .btalk-moim-cta {
   display: block;
   width: 100%;
