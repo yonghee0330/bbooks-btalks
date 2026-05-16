@@ -34,53 +34,6 @@
   overflow-x: hidden;
 }
 
-/* 상단 네비 */
-.btalk-nav {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: rgba(247, 244, 236, 0.94);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(45, 59, 45, 0.1);
-  padding: 12px 20px;
-}
-.btalk-nav-inner {
-  max-width: 920px;
-  margin: 0 auto;
-}
-.btalk-back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--bt-navy);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  border: 2px solid var(--bt-navy);
-  border-radius: 999px;
-  background: transparent;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
-}
-.btalk-back:hover {
-  background: var(--bt-navy);
-  color: var(--bt-cream-fg);
-  border-color: var(--bt-navy);
-  box-shadow: 0 6px 20px rgba(31, 41, 32, 0.22);
-  transform: translateY(-1px);
-}
-.btalk-back:focus-visible {
-  outline: 2px solid var(--bt-accent);
-  outline-offset: 3px;
-}
-
 /* 히어로 — 포스터와 같은 딥 그린 + 크림 글자 */
 .btalk-hero {
   background: linear-gradient(165deg, var(--bt-forest-deep) 0%, var(--bt-forest) 42%, #354535 100%);
@@ -209,6 +162,56 @@
   min-width: 52px;
 }
 
+.btalk-meta-item--recruit .btalk-recruit-col {
+  flex: 1;
+  min-width: 0;
+}
+.btalk-recruit-heading {
+  line-height: 1.45;
+}
+.btalk-recruit-live {
+  margin-top: 6px;
+}
+.btalk-recruit-msg {
+  margin: 0;
+  font-size: clamp(12px, 3.2vw, 13px);
+  line-height: 1.5;
+  color: rgba(236, 232, 220, 0.92);
+}
+.btalk-recruit-msg--error {
+  color: #fecaca;
+}
+.btalk-recruit-closed {
+  margin: 6px 0 0;
+  font-size: clamp(12px, 3.3vw, 14px);
+  font-weight: 700;
+  color: #fdba74;
+  letter-spacing: -0.02em;
+}
+.btalk-recruit-bar-track {
+  width: 100%;
+  max-width: 100%;
+  height: 12px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+.btalk-recruit-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0a1f44 0%, #4a8cff 100%);
+  transition: width 0.45s ease;
+}
+.btalk-recruit-bar-fill.is-warn {
+  background: linear-gradient(90deg, #c2410c 0%, #fb923c 55%, #fdba74 100%);
+}
+.btalk-recruit-bar-fill.is-full {
+  background: linear-gradient(90deg, #9a3412 0%, #ea580c 45%, #f59e0b 100%);
+}
+
 /* 포스터 2장 */
 .btalk-poster-section {
   padding: 36px 20px 44px;
@@ -326,6 +329,51 @@
   font-style: normal;
   font-weight: 600;
   color: var(--bt-navy);
+}
+
+.btalk-author-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.btalk-author-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btalk-author-name-row .btalk-author-name {
+  margin: 0;
+}
+.btalk-author-instagram {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  background-image: linear-gradient(
+    135deg,
+    #833ab4 0%,
+    #c13584 18%,
+    #e1306c 40%,
+    #fd1d1d 62%,
+    #fcb045 100%
+  );
+  box-shadow: 0 2px 8px rgba(131, 58, 180, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btalk-author-instagram:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 12px rgba(225, 48, 108, 0.35);
+  transform: translateY(-1px);
+}
+.btalk-author-instagram:focus-visible {
+  outline: 2px solid var(--bt-accent);
+  outline-offset: 3px;
 }
 
 /* 책 카드 그리드 */
@@ -661,6 +709,47 @@
 .btalk-archive-placeholder {
   font-size: 14px;
   color: var(--bt-muted);
+}
+
+.btalk-moim-cta {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: clamp(22px, 5vw, 30px) clamp(18px, 4vw, 26px);
+  border-radius: 12px;
+  text-decoration: none;
+  text-align: center;
+  color: var(--bt-cream-fg);
+  font-weight: 700;
+  font-size: clamp(14px, 3.7vw, 17px);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--bt-forest-deep) 0%, var(--bt-forest) 52%, var(--bt-forest-soft) 100%);
+  box-shadow: 0 8px 28px rgba(31, 41, 32, 0.32);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btalk-moim-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(31, 41, 32, 0.42);
+  filter: brightness(1.05);
+}
+.btalk-moim-cta:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.95);
+  outline-offset: 3px;
+}
+.btalk-moim-cta-inner {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em 0.65em;
+  max-width: 100%;
+}
+.btalk-moim-cta-icon,
+.btalk-moim-cta-arrow {
+  flex-shrink: 0;
+  font-size: 1.08em;
+  line-height: 1;
 }
 
 /* 푸터 */
