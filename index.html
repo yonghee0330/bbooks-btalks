@@ -290,8 +290,59 @@
             </div>
           </div>
         </section>
+
+        <section class="btalk-review-wall" aria-labelledby="archive-review-title">
+          <div class="btalk-review-head">
+            <h4 id="archive-review-title" class="btalk-review-title">💬 함께 남긴 한 줄</h4>
+            <p class="btalk-review-sub">비톡스의 밤을 함께한 이들이 남긴 짧은 기록</p>
+          </div>
+
+          <form id="btalk-review-form" class="btalk-review-form" novalidate>
+            <div class="btalk-review-field btalk-review-field--name">
+              <label for="bt-review-nickname">닉네임</label>
+              <input
+                id="bt-review-nickname"
+                name="nickname"
+                type="text"
+                maxlength="10"
+                autocomplete="nickname"
+                placeholder="닉네임 (2~10자)"
+              />
+            </div>
+
+            <div class="btalk-review-field btalk-review-field--message">
+              <label for="bt-review-message">한 줄 감상</label>
+              <div class="btalk-review-message-wrap">
+                <input
+                  id="bt-review-message"
+                  name="message"
+                  type="text"
+                  maxlength="80"
+                  placeholder="비톡스의 밤, 한 줄로 남겨주세요"
+                />
+                <span class="btalk-review-counter" id="bt-review-counter" aria-live="polite">0 / 80</span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btalk-review-submit"
+              id="bt-review-submit"
+              aria-label="한 줄 감상 등록하기"
+              disabled
+            >등록</button>
+          </form>
+
+          <div class="btalk-review-list" id="bt-review-list" aria-live="polite">
+            <p class="btalk-review-status">감상을 불러오는 중...</p>
+          </div>
+
+          <button type="button" class="btalk-review-more" id="bt-review-more" hidden>더 보기</button>
+        </section>
       </article>
     </section>
+
+    <div class="btalk-toast" id="btalk-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <a
       class="btalk-moim-cta"
@@ -640,6 +691,197 @@
       .catch(function () {
         showError();
       });
+  })();
+  </script>
+  <script>
+  (function () {
+    var REVIEW_API_URL =
+      'https://script.google.com/macros/s/AKfycbxBvqQGpFDW_Zi_DNu6tQylfq-fNVAMeqJFvlU-fiIU9A6ZbLjDzCL9eC87X49bKtsK/exec';
+    var PAGE_SIZE = 12;
+    var EVENT_DATE_LABEL = '2025.04.26';
+
+    var form = document.getElementById('btalk-review-form');
+    var nicknameInput = document.getElementById('bt-review-nickname');
+    var messageInput = document.getElementById('bt-review-message');
+    var counter = document.getElementById('bt-review-counter');
+    var submitBtn = document.getElementById('bt-review-submit');
+    var list = document.getElementById('bt-review-list');
+    var moreBtn = document.getElementById('bt-review-more');
+    var toast = document.getElementById('btalk-toast');
+    if (!form || !nicknameInput || !messageInput || !counter || !submitBtn || !list || !moreBtn || !toast) return;
+
+    var reviews = [];
+    var visibleCount = PAGE_SIZE;
+    var toastTimer = null;
+
+    function showToast(message, type) {
+      toast.textContent = message;
+      toast.classList.toggle('is-error', type === 'error');
+      toast.classList.add('is-visible');
+      if (toastTimer) window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 3000);
+    }
+
+    function setStatus(message, isError) {
+      list.innerHTML = '';
+      var p = document.createElement('p');
+      p.className = 'btalk-review-status';
+      if (isError) p.classList.add('is-error');
+      p.textContent = message;
+      list.appendChild(p);
+      moreBtn.hidden = true;
+    }
+
+    function normalizeReview(item, index) {
+      item = item || {};
+      return {
+        nickname: String(item.nickname || item.name || '익명').trim().slice(0, 10) || '익명',
+        message: String(item.message || item.review || item.content || '').trim().slice(0, 80),
+        date: String(item.dateLabel || item.date || item.createdAt || EVENT_DATE_LABEL),
+        sortValue: item.createdAt || item.timestamp || item.date || item.id || index || 0,
+      };
+    }
+
+    function getSortTime(value) {
+      if (typeof value === 'number') return value;
+      var parsed = Date.parse(value);
+      return isNaN(parsed) ? 0 : parsed;
+    }
+
+    function getDateLabel(value) {
+      if (/^\d{4}\.\d{2}\.\d{2}$/.test(String(value))) return String(value);
+      var parsed = Date.parse(value);
+      if (isNaN(parsed)) return EVENT_DATE_LABEL;
+      var d = new Date(parsed);
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return y + '.' + m + '.' + day;
+    }
+
+    function renderReviews() {
+      if (!reviews.length) {
+        setStatus('첫 번째 한 줄을 남겨주세요 ✍️', false);
+        return;
+      }
+
+      list.innerHTML = '';
+      var grid = document.createElement('div');
+      grid.className = 'btalk-review-grid';
+
+      reviews.slice(0, visibleCount).forEach(function (review) {
+        var card = document.createElement('article');
+        card.className = 'btalk-review-card';
+
+        var message = document.createElement('p');
+        message.className = 'btalk-review-message';
+        message.textContent = review.message;
+
+        var meta = document.createElement('p');
+        meta.className = 'btalk-review-meta';
+        meta.textContent = '— ' + review.nickname + ' · ' + getDateLabel(review.date);
+
+        card.appendChild(message);
+        card.appendChild(meta);
+        grid.appendChild(card);
+      });
+
+      list.appendChild(grid);
+      moreBtn.hidden = visibleCount >= reviews.length;
+    }
+
+    function loadReviews() {
+      setStatus('감상을 불러오는 중...', false);
+      fetch(REVIEW_API_URL, { method: 'GET', mode: 'cors', credentials: 'omit', cache: 'no-store' })
+        .then(function (res) {
+          if (!res.ok) throw new Error('http');
+          return res.json();
+        })
+        .then(function (data) {
+          var raw = data && Array.isArray(data.reviews) ? data.reviews : [];
+          reviews = raw
+            .map(normalizeReview)
+            .filter(function (review) {
+              return review.message;
+            })
+            .sort(function (a, b) {
+              return getSortTime(b.sortValue) - getSortTime(a.sortValue);
+            });
+          visibleCount = PAGE_SIZE;
+          renderReviews();
+        })
+        .catch(function () {
+          setStatus('감상을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.', true);
+        });
+    }
+
+    function updateCounterAndButton() {
+      var len = messageInput.value.length;
+      counter.textContent = len + ' / 80';
+      counter.classList.toggle('is-limit', len >= 80);
+      submitBtn.disabled = nicknameInput.value.trim().length < 2 || submitBtn.dataset.loading === 'true';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nickname = nicknameInput.value.trim();
+      var message = messageInput.value.trim();
+
+      if (nickname.length < 2) {
+        showToast('닉네임을 2자 이상 입력해주세요', 'error');
+        updateCounterAndButton();
+        return;
+      }
+      if (!message) {
+        showToast('한 줄 감상을 입력해주세요', 'error');
+        return;
+      }
+
+      submitBtn.dataset.loading = 'true';
+      submitBtn.disabled = true;
+      submitBtn.textContent = '등록 중...';
+
+      fetch(REVIEW_API_URL, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
+        body: JSON.stringify({ nickname: nickname, message: message }),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('http');
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || data.success !== true) {
+            throw new Error((data && data.message) || '저장에 실패했습니다');
+          }
+          form.reset();
+          updateCounterAndButton();
+          showToast('한 줄 감상이 등록되었습니다 ✨', 'success');
+          loadReviews();
+        })
+        .catch(function (err) {
+          showToast(err && err.message && err.message !== 'http' ? err.message : '잠시 후 다시 시도해주세요', 'error');
+        })
+        .finally(function () {
+          submitBtn.dataset.loading = 'false';
+          submitBtn.textContent = '등록';
+          updateCounterAndButton();
+        });
+    });
+
+    moreBtn.addEventListener('click', function () {
+      visibleCount += PAGE_SIZE;
+      renderReviews();
+    });
+
+    nicknameInput.addEventListener('input', updateCounterAndButton);
+    messageInput.addEventListener('input', updateCounterAndButton);
+
+    updateCounterAndButton();
+    loadReviews();
   })();
   </script>
 </body>

@@ -928,6 +928,238 @@
   }
 }
 
+.btalk-review-wall {
+  margin-top: 34px;
+}
+.btalk-review-head {
+  margin-bottom: 18px;
+  padding-left: 16px;
+  border-left: 4px solid #0a1f44;
+}
+.btalk-review-title {
+  margin: 0 0 8px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  color: var(--bt-navy);
+  letter-spacing: -0.02em;
+}
+.btalk-review-sub {
+  margin: 0;
+  font-size: clamp(13px, 3.3vw, 15px);
+  color: var(--bt-muted);
+  line-height: 1.55;
+}
+.btalk-review-form {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.85fr) minmax(0, 2.2fr) auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 22px;
+  padding: 24px;
+  background: #fafaf7;
+  border: 1px solid rgba(213, 208, 196, 0.8);
+  border-radius: 16px;
+}
+.btalk-review-field {
+  min-width: 0;
+}
+.btalk-review-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bt-navy);
+}
+.btalk-review-field input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 11px 13px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--bt-ink);
+  background: #fff;
+  border: 1px solid #d4cec2;
+  border-radius: 10px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btalk-review-field input:focus {
+  outline: none;
+  border-color: #0a1f44;
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.08);
+}
+.btalk-review-message-wrap {
+  position: relative;
+}
+.btalk-review-field--message input {
+  padding-right: 72px;
+}
+.btalk-review-counter {
+  position: absolute;
+  right: 12px;
+  bottom: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a8cff;
+  pointer-events: none;
+}
+.btalk-review-counter.is-limit {
+  color: #c2410c;
+}
+.btalk-review-submit {
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0a1f44 0%, #17376c 58%, #0a1f44 100%);
+  box-shadow: 0 6px 18px rgba(10, 31, 68, 0.22);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btalk-review-submit:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 9px 24px rgba(10, 31, 68, 0.3);
+}
+.btalk-review-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btalk-review-list {
+  min-height: 58px;
+}
+.btalk-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.btalk-review-card {
+  position: relative;
+  min-height: 148px;
+  padding: 20px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(213, 208, 196, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(28, 38, 28, 0.07);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.btalk-review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(28, 38, 28, 0.12);
+}
+.btalk-review-card::before {
+  content: '"';
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  color: rgba(90, 99, 86, 0.18);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+.btalk-review-message {
+  position: relative;
+  z-index: 1;
+  margin: 20px 0 18px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2c2c2c;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.btalk-review-meta {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+.btalk-review-status {
+  margin: 0;
+  padding: 24px 10px;
+  font-size: 14px;
+  color: var(--bt-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+.btalk-review-status.is-error {
+  color: #b52f28;
+}
+.btalk-review-more {
+  display: block;
+  margin: 18px auto 0;
+  padding: 10px 18px;
+  border: 1px solid rgba(45, 59, 45, 0.26);
+  border-radius: 999px;
+  color: var(--bt-navy);
+  background: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btalk-review-more:hover {
+  background: rgba(45, 59, 45, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(28, 38, 28, 0.08);
+}
+.btalk-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 1500;
+  max-width: min(90vw, 420px);
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  background: #0a1f44;
+  box-shadow: 0 12px 34px rgba(10, 31, 68, 0.26);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.btalk-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.btalk-toast.is-error {
+  background: #b52f28;
+  box-shadow: 0 12px 34px rgba(181, 47, 40, 0.24);
+}
+@media (max-width: 900px) {
+  .btalk-review-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .btalk-review-form {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    padding: 20px;
+  }
+  .btalk-review-submit {
+    width: 100%;
+  }
+}
+@media (max-width: 560px) {
+  .btalk-review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .btalk-moim-cta {
   display: block;
   width: 100%;
