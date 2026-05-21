@@ -170,6 +170,7 @@
   line-height: 1.45;
 }
 .btalk-recruit-live {
+  display: none; /* 잠시 숨김: 실시간 신청 인원·프로그레스 바 */
   margin-top: 6px;
 }
 .btalk-recruit-msg {
